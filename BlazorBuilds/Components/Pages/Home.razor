@@ -1,0 +1,86 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1 class="mb-4">Hello, <span style="text-decoration:line-through">world!</span> Tab Control!</h1>
+
+<button class="btn btn-primary mb-4" @onclick="() => _tabIndex++">Cycle / Activate Tab</button>
+
+<TabControl ActiveTabIndex="_tabIndex" ActiveTabIndexChanged="TabChangedHandler" AutoActivatePanel="false" WrapTabs="false" TabsAndPanelBgColour="snow" TabFocusColour="purple">
+    @* or auto two way binding using @bind-ActiveTabIndex="_tabIndex" without the ActiveTabIndexChanged="TabChangedHandler"*@
+
+    <TabPage AriaTabName="ARIA Tab Pattern Information" AddPanelTabIndex="false">
+        <TabPageContent>
+            <h2>Tabs Pattern</h2>
+
+            <p>To view the ARIA authoring practices for a tab control view: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank">Tabs Pattern (Opens in new window)</a></p>
+
+            <p>The control offers the correct keyboard support and has a parameter you can use to set which activation mode you would like</p>
+
+            <h3>Examples</h3>
+            <ul>
+                <li><a href="examples/tabs-automatic/" target="_blank">Tabs With Automatic Activation (Opens in new window)</a>: A tabs widget where tabs are automatically activated and their panel is displayed when they receive focus.</li>
+                <li><a href="examples/tabs-manual/" target="_blank">Tabs With Manual Activation (Opens in new window)</a>: A tabs widget where users activate a tab and display its panel by pressing <kbd>Space</kbd> or <kbd>Enter</kbd>.</li>
+            </ul>
+
+        </TabPageContent>
+    </TabPage>
+
+    <TabPage AriaTabName="Weather data" AddPanelTabIndex="true">
+        <TabContent>
+            <span class="bi-cloud-rain"></span>Weather
+        </TabContent>
+        <TabPageContent>
+            <Weather />
+        </TabPageContent>
+    </TabPage>
+
+    <TabPage AriaTabName="Aria some form" AddPanelTabIndex="false">
+        <TabContent>
+            Some form
+        </TabContent>
+        <TabPageContent>
+            <EditForm Model="@Model">
+                <h2>Fake form</h2>
+                <label class="form-label" for="textBoxFieldOne">Field One:</label>
+                <InputText id="textBoxFieldOne" Class="form-control" @bind-Value="Model.FieldOne" />
+
+                <label class="form-label" for="textBoxFieldTwo">Field Two::</label>
+                <InputText id="textBoxFieldTwo" Class="form-control" @bind-Value="Model.FieldTwo" />
+
+                <label class="form-label" for="textBoxFieldThree">Field Three:</label>
+                <InputText id="textBoxFieldThree" Class="form-control" @bind-Value="Model.FieldThree" />
+
+                <button type="button" class="btn btn-primary mt-3" @onclick="() => Model = new FormModel()">Clear fields</button>
+            </EditForm>
+        </TabPageContent>
+
+    </TabPage>
+    <TabPage AriaTabName="Counter" AddPanelTabIndex="false">
+        <TabPageContent>
+            <Counter />
+        </TabPageContent>
+    </TabPage>
+
+</TabControl>
+
+
+
+@code {
+
+    private FormModel Model { get; set; } = new FormModel();
+
+    private int _tabIndex = 1;
+
+    public class FormModel
+    {
+        public string FieldOne { get; set; }
+        public string FieldTwo { get; set; }
+        public string FieldThree { get; set; }
+    }
+
+    private void TabChangedHandler(int index)
+
+        =>  _tabIndex = index;
+
+}

@@ -1,0 +1,36 @@
+﻿<CascadingValue Value="this" IsFixed="true">
+
+    <div class="@GetStyleInfo(StyleInfo.TabControlClasses)" style="@GetStyleInfo(StyleInfo.BackgroundStyle)">
+        <div class="@GetStyleInfo(StyleInfo.TabsClasses)" role="tablist" @onkeydown="HandleKeyPress">
+            
+            @foreach (var tabPage in _tabPages)
+            {
+                var capturedIndex = _tabPages.IndexOf(tabPage);
+                var isActiveTab = capturedIndex == this._activeTabIndex;
+
+                @if (false == _tabButtonRefs.ContainsKey(capturedIndex)) _tabButtonRefs.Add(capturedIndex, new ElementReference());
+
+                <button id="@tabPage.TabID" @ref="_tabButtonRefs[capturedIndex]" type="button" role="tab" class="@GetStyleInfo(StyleInfo.TabClasses,isActiveTab)" tabindex="@(isActiveTab ? 0 : -1)"
+                        aria-selected="@(isActiveTab ? "true" : "false")" aria-controls="@tabPage.TabPanelID" style="@GetStyleInfo(StyleInfo.FocusStyle)" aria-label="@tabPage.AriaTabName"
+                        @onclick="() => RaiseTabChanged(capturedIndex)" @onfocus="() => CheckRaiseTabChanged(capturedIndex)">
+
+                    <span class="@GetStyleInfo(StyleInfo.TabTitleClasses)" aria-hidden="true">
+                        @if (true == String.IsNullOrWhiteSpace(tabPage?.TabContent?.ToString()))
+                        {
+                            @tabPage!.AriaTabName
+                        }
+                        else
+                        {
+                            @tabPage.TabContent
+                        }
+                    </span>
+
+                </button>
+            }
+
+        </div>
+
+        @ChildContent
+
+    </div>
+</CascadingValue>

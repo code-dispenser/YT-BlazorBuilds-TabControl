@@ -1,0 +1,80 @@
+﻿
+.tab-control {
+
+    &__tabs {
+        display: flex;
+        gap: 2px;
+
+        &--wrap {
+            flex-wrap: wrap;
+        }
+    }
+
+    &__tab {
+        position: relative;
+        top: 1px;
+        min-width: 6rem;
+        background-color: var(--tab-control-bg-clr);
+        padding: 0.5rem;
+        border: 1px solid var(--divider-clr);
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        border-top: 3px solid var(--divider-clr);
+        cursor: pointer;
+
+        &--active {
+            border-top: 5px solid var(--tab-focus-clr);
+            border-bottom: none;
+            z-index: 1;
+        }
+
+        &:hover::before, &:focus::before {
+            position: absolute;
+            left: 0.25rem;
+            top: 0.25rem;
+            content: "";
+            border-radius: 0.25rem;
+            width: calc(100% - 0.5rem);
+            height: calc(100% - 0.5rem);
+            border: 3px solid var(--tab-focus-clr);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+
+    &__tab-title {
+        font-size: 0.875rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    &__content {
+        position: relative;
+        background-color: var( --tab-control-bg-clr);
+        padding: 1rem;
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+        border: 1px solid var(--divider-clr);
+        outline: none;
+
+        &--hidden {
+            display: none;
+        }
+
+        &[tabindex="0"]:focus::before {
+            position: absolute;
+            left: 0.25rem;
+            top: 0.25rem;
+            content: "";
+            border-radius: 0.25rem;
+            width: calc(100% - 0.5rem);
+            height: calc(100% - 0.5rem);
+            border: 2px solid var(--tab-focus-clr);
+        }
+    }
+}

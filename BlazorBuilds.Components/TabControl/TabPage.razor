@@ -1,0 +1,48 @@
+﻿@implements IAsyncDisposable
+
+    <div id="@TabPanelID" class="@_cssClasses" role="tabpanel" aria-labelledby="@TabID" tabindex="@(AddPanelTabIndex ? 0 : -1)" style="@_focusStyle">
+        @TabPageContent
+    </div>
+
+@code {
+    
+    [CascadingParameter] public TabControl? ParentControl   { get; set; } = default!;
+
+    [Parameter] public RenderFragment?      TabPageContent  { get; set; }
+    [Parameter] public RenderFragment?      TabContent      { get; set; } = null;
+
+    [Parameter, EditorRequired] public bool AddPanelTabIndex { get; set; } = true;
+    [Parameter, EditorRequired] public string AriaTabName    { get; set; } = default!;
+
+    private string _cssClasses = String.Empty;
+    private string _focusStyle = String.Empty;
+
+    internal string TabPanelID { get; } = $"tab-panel-{Guid.NewGuid().ToString()}";
+    internal string TabID      { get; } = $"tab-{Guid.NewGuid().ToString()}";
+
+
+    protected override void OnInitialized()
+    {
+        if (ParentControl == null) throw new ArgumentNullException(GlobalStrings.Error_Message_Needs_Tab_Control);
+
+        ParentControl.AddTabPage(this);
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (true == String.IsNullOrWhiteSpace(AriaTabName)) throw new ArgumentNullException(GlobalStrings.Error_Message_Needs_Aria_Tab_Name);
+
+        _cssClasses = ParentControl!.ActiveTab == this ? GlobalStrings.Tab_Panel_Content_Class : $"{GlobalStrings.Tab_Panel_Content_Class} {GlobalStrings.Tab_Panel_Content_Hidden_Modifier_Class}";
+
+        _focusStyle = (String.IsNullOrWhiteSpace(ParentControl!.TabFocusColour) ? String.Empty : $"{GlobalStrings.Tab_Focus_Colour_Css_Var}:{ParentControl!.TabFocusColour};").Replace(";;", ";");
+
+        base.OnParametersSet();
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        ParentControl?.RemoveTabPage(this);
+
+        return ValueTask.CompletedTask;
+    }
+}
