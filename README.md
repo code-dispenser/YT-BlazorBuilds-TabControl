@@ -4,6 +4,6 @@
 
 This repository contains the solution used in my YouTube video showing how to build a Tab Control component following the ARIA authoring practice guidelines for the Tabs Pattern.
 
-YouTube video: Hope to have it done and provide link Monday afternoon.
+YouTube video: https://youtu.be/cziqkaTERNw
 
 Coffees welcomed : https://ko-fi.com/codedispenser
