@@ -7,3 +7,6 @@ This repository contains the solution used in my YouTube video showing how to bu
 YouTube video: https://youtu.be/cziqkaTERNw
 
 Coffees welcomed : https://ko-fi.com/codedispenser
+
+**Note:** I amended GetStyleInfo to return null for missing style variable values. I forgot that Blazor does not remove attributes with empty/no values, only those with a null value. 
+
