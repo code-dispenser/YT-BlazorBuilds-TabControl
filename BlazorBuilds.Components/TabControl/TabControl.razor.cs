@@ -103,17 +103,17 @@ public partial class TabControl
 
     }
 
-    private string GetStyleInfo(StyleInfo styleInfo, bool active = false)
+    private string? GetStyleInfo(StyleInfo styleInfo, bool active = false)
 
         => styleInfo switch
         {
-            StyleInfo.FocusStyle => (String.IsNullOrWhiteSpace(TabFocusColour) ? String.Empty : $"{GlobalStrings.Tab_Focus_Colour_Css_Var}:{TabFocusColour};").Replace(";;", ";"),
-            StyleInfo.BackgroundStyle => (String.IsNullOrWhiteSpace(TabsAndPanelBgColour) ? String.Empty : $"{GlobalStrings.Tab_And_Panel_Background_Color_Css_Var}:{TabsAndPanelBgColour};").Replace(";;", ";"),
+            StyleInfo.FocusStyle        => String.IsNullOrWhiteSpace(TabFocusColour) ? null : $"{GlobalStrings.Tab_Focus_Colour_Css_Var}:{TabFocusColour};".Replace(";;", ";"),
+            StyleInfo.BackgroundStyle   => String.IsNullOrWhiteSpace(TabsAndPanelBgColour) ? null : $"{GlobalStrings.Tab_And_Panel_Background_Color_Css_Var}:{TabsAndPanelBgColour};".Replace(";;", ";"),
 
-            StyleInfo.TabClasses => (active) ? $"{GlobalStrings.Tab_Class} {GlobalStrings.Tab_Active_Modifier_Class}" : GlobalStrings.Tab_Class,
-            StyleInfo.TabsClasses => WrapTabs ? $"{GlobalStrings.Tabs_Class} {GlobalStrings.Tabs_Wrap_Modifier_Class}" : GlobalStrings.Tabs_Class,
+            StyleInfo.TabClasses        => (active) ? $"{GlobalStrings.Tab_Class} {GlobalStrings.Tab_Active_Modifier_Class}" : GlobalStrings.Tab_Class,
+            StyleInfo.TabsClasses       => WrapTabs ? $"{GlobalStrings.Tabs_Class} {GlobalStrings.Tabs_Wrap_Modifier_Class}" : GlobalStrings.Tabs_Class,
 
-            StyleInfo.TabTitleClasses => GlobalStrings.Tab_Title_Class,
+            StyleInfo.TabTitleClasses   => GlobalStrings.Tab_Title_Class,
             StyleInfo.TabControlClasses => GlobalStrings.Tab_Control_Class,
             _ => String.Empty,
         };
